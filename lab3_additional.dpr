@@ -4,16 +4,15 @@ program lab3_dop;
 
 uses
   math;
-var x,cosx,sinx,e,realx:Real;
-k:Byte;
-b:integer;
+var x,u,cosx,sinx,e,realx,s,denominator,coscoef,sincoef:Real;
+b,k:integer;
 xstr:string;
+coef:ShortInt;
 
 
 function getTeylorSin(x:Real):Real;
 var CurrTerm, eps, Prev, Curr: real;
 n:Byte;
-coef:ShortInt;
 begin
   eps:=1;
   CurrTerm:=x;
@@ -30,37 +29,13 @@ begin
     Inc(n);
   end;
 
-  coef:=1;
-  if (Abs(k) mod 2 = 0) then
-  begin
-    if((k <> 0) and (Abs(k) mod 4 <> 0)) then
-      coef:=-1;
-  end
-  else
-  begin
-    if(k>0) then
-    begin
-      if(k mod 3 = 0) then
-        coef:=1
-      else
-        coef:=-1;
-    end
-    else
-    begin
-      if(Abs(k) mod 3 = 0) then
-        coef:=-1
-      else
-        coef:=1;
-    end;
-  end;
 
-  getTeylorSin:=coef*Curr;
+  getTeylorSin:=Curr;
 end;
 
 function getTeylorCos(x:Real):Real;
 var CurrTerm, eps, Prev, Curr: real;
 n:Byte;
-coef:ShortInt;
 begin
   eps:=1;
   CurrTerm:=1;
@@ -76,75 +51,45 @@ begin
     Inc(n);
   end;
 
-  coef:=1;
-  if (Abs(k) mod 2 = 0) then
-  begin
-    if(Abs(k) mod 4 <> 0) then
-      coef:=-1;
-  end
-  else
-  begin
-    if(k>0) then
-    begin
-      if(k mod 3 = 0) then
-        coef:=-1
-      else
-        coef:=1;
-    end
-    else
-    begin
-      if(Abs(k) mod 3 = 0) then
-        coef:=1
-      else
-        coef:=-1;
-    end;
-  end;
-
-  getTeylorCos:=coef*Curr;
+  getTeylorCos:=Curr;
 end;
 begin
   repeat
     Writeln('Please, enter value of x. To exit enter "Exit"');
     Readln(xstr);
-    Val(xstr,x,b);
+    Val(xstr,u,b);
     if (b = 0) then
     begin
+      if(u >= 0) then
+        coef:=1
+      else
+        coef:=-1;
+      x:=Pi*u*u/2;
       realx:=x;
-      e:=0.00001;
+      e:=0.000001;
       k:=0;
 
-      while(Abs(x) > 1) do
+      while(Abs(x) > 2*pi) do
       begin
-        if(x > 1) then
-        begin
-          x:= x - pi/2;
-          Inc(k);
-        end
+        if(x > 0) then
+          x:= x - 2*pi
         else
-        begin
-          x:=x+pi/2;
-          Dec(k);
-        end;
+          x:=x + 2*pi;
 
       end;
 
-      if ((Abs(k) mod 2 <> 0) and (Abs(realx) > 1)) then
-      begin
-        cosx:=getTeylorSin(x);
-        sinx:=getTeylorCos(x);
-      end
-      else
-      begin
-        sinx:=getTeylorSin(x);
-        cosx:=getTeylorCos(x);
-      end;
+      sinx:=getTeylorSin(x);
+      cosx:=getTeylorCos(x);
 
+      // ----- Integral Sin ------ //
+      denominator:=Sqrt(2*pi*x);
+      s:=coef*1/2-cosx*coscoef/denominator - sinx*sincoef/denominator;
 
-
-      Writeln('Teilor cos = ', cosx:0:8);
-      Writeln('Real cos = ', Cos(realx):0:8);
-      Writeln('Teilor sin = ', sinx:0:8);
-      Writeln('Real sin = ', Sin(realx):0:8);
+      Writeln('k = ', k);
+      Writeln('Teilor cos = ', cosx:0:4);
+      Writeln('Real cos = ', Cos(realx):0:4);
+      Writeln('Teilor sin = ', sinx:0:4);
+      Writeln('Real sin = ', Sin(realx):0:4);
     end;
   until(b > 0);
 end.
