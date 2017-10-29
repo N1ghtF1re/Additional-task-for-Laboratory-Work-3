@@ -8,9 +8,13 @@ Lab №3. Iterative cycles - an additional task
 
 **Language**: Delphi
 
+**Algorithm scheme**: 
+
+![Algorithm scheme](https://i.imgur.com/aqfwbEn.jpg)
+
 **Code:**
 ```
-program lab3_dop_experimental;
+program lab3_additional;
 
 {$APPTYPE CONSOLE}
 
@@ -37,8 +41,6 @@ begin
     eps:=Abs(Prev-Curr);
     Inc(n);
   end;
-
-
   getTeylorSin:=Curr;
 end;
 
@@ -129,6 +131,7 @@ begin
     end;
   until(b > 0);
 end.
+
 
 ```
 
