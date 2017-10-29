@@ -1,3 +1,15 @@
+Lab №3. Iterative cycles - an additional task
+--------------------
+***
+#### Task:
+![The task](https://i.imgur.com/A7F4otB.png)
+
+>The program calculates the integral Fresnel sin for large cases of the argument, using the asymptotic expansion
+
+**Language**: Delphi
+
+**Code:**
+```
 program lab3_dop_experimental;
 
 {$APPTYPE CONSOLE}
@@ -25,6 +37,8 @@ begin
     eps:=Abs(Prev-Curr);
     Inc(n);
   end;
+
+
   getTeylorSin:=Curr;
 end;
 
@@ -115,3 +129,6 @@ begin
     end;
   until(b > 0);
 end.
+
+```
+
