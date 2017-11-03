@@ -10,7 +10,7 @@ Lab №3. Iterative cycles - an additional task
 
 **Algorithm scheme**: 
 
-![Algorithm scheme](https://i.imgur.com/aqfwbEn.jpg)
+![Algorithm scheme](https://i.imgur.com/kvxNrIo.jpg)
 
 **Code:**
 ``` pascal
